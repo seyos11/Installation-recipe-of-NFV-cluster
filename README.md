@@ -33,9 +33,10 @@ Also, the interface of host-ony network must be forced as it was forced in osm m
  sudo dhclient eth1
 ```
 
-Microk8s allows to enable some addons that make kubernetes configurution easier. Some of the requireds are the storage, dns and metallb. The last will allow the system to have a load-balancer that will work as ingress to kubernetes cluster. A range of ip addresses must be given; it should be in the range of the host-only network, in order to have connection from osm node.
+Microk8s allows to enable some addons that make kubernetes configurution easier. Some of the requireds are the storage, dns and metallb. The last will allow the system to have a load-balancer that will work as ingress to kubernetes cluster. A range of ip addresses must be given; it should be in the range of the host-only network, in order to have connection from osm node. Helm3 is also enabled to deploy microservices with charts that give facilities to automatizate some processes.
+
 ```
-microk8s enable storage dns metallb
+microk8s enable storage dns metallb helm3
 ```
 Finally, to have a multi-node cluster, next command must be called from master node shell to obtain a unique token to be executed from other workers nodes 
 ```
@@ -69,5 +70,5 @@ osm k8scluster-add --creds k8s-cluster.yaml --version 1.21 --vim dummy_vim --des
 ```
 
 
-
+Once the installation is finished it is time to provide an example. This one is taken from an osm hackfest, where the purpose was creating an ldap
 
