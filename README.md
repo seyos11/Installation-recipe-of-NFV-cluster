@@ -27,6 +27,12 @@ sudo chown -f -R $USER ~/.kube
 su - $USER
 ```
 
+Also, the interface of host-ony network must be forced as it was forced in osm machine
+
+ ```
+ sudo dhclient eth1
+```
+
 Microk8s allows to enable some addons that make kubernetes configurution easier. Some of the requireds are the storage, dns and metallb. The last will allow the system to have a load-balancer that will work as ingress to kubernetes cluster. A range of ip addresses must be given; it should be in the range of the host-only network, in order to have connection from osm node.
 ```
 microk8s enable storage dns metallb
@@ -40,3 +46,28 @@ Once the tokens are given , they must be provided in the workers' shells to join
 ```
 microk8s join <ip_address_master_node>:2500/<token_generated>
 ```
+
+Last step is to connect both systems. A copy of kubernetes configuration is needed for that purpose. We obtain it from microk8s node, and through ssh will copy on osm machine:
+
+```
+microk8s config > config
+scp config upm@<ip_address_osm_machine>:~/k8s-cluster.yaml
+```
+
+Now, this file is available in osm machine. This file must be edited; the ip address of the server must be changed from 10.0.2.15 (nat ip) to ip address of the host-only interface. Osm has the option to deploy a cluster, and with the instantation of network functions and helm charts, modules are deployed on that cluster. It can be deployed in the same kubernetes where osm is hosted or, in order to facilitate the understading of the funcionality of the system, it can be deployed on another node as well.
+
+In adition, osm needs a VIM to have this cluster deployed. As traditional VIM such as Openstack are not available in this guide, there is another possibility: installing a dummy VIM, that points to the own machine to have all the CNFs deployed on it. Next command creates this dummy vim:
+
+ ```
+  osm vim-create --name dummy_vim --user u --password p --tenant p --account_type dummy --auth_url http://localhost/dummy
+```
+
+Next step is creating the cluster connection for osm:
+
+```
+osm k8scluster-add --creds k8s-cluster.yaml --version 1.21 --vim dummy_vim --description "External k8s cluster" --namespace osm-namespace --k8s-nets '{"net1": "osm-ext"}' microk8s-cluster
+```
+
+
+
+
