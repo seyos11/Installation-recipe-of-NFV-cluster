@@ -20,11 +20,11 @@ sudo snap install microk8s --classic --channel=1.21
 
 If it was considered to install a multi-node cluster, it would be necessary to deploy more machine with the same ova and insall microk8s in these machines.
 
-Now it is time to give permissions to the master node to microk8s to be used. The command required are the following:
+Now it is time to give permissions to the master node to microk8s to be used. The command required are the following: 
 ```
 sudo usermod -a -G microk8s $USER
 sudo chown -f -R $USER ~/.kube
-su - $USER
+su - $USER (password: 'xxx')
 ```
 
 Also, the interface of host-ony network must be forced as it was forced in osm machine
@@ -51,8 +51,8 @@ microk8s join <ip_address_master_node>:2500/<token_generated>
 Last step is to connect both systems. A copy of kubernetes configuration is needed for that purpose. We obtain it from microk8s node, and through ssh will copy on osm machine:
 
 ```
-microk8s config > config
-scp config upm@<ip_address_osm_machine>:~/k8s-cluster.yaml
+microk8s config > config.yaml
+scp config.yaml upm@<ip_address_osm_machine>:~/k8s-cluster.yaml
 ```
 
 Now, this file is available in osm machine. This file must be edited; the ip address of the server must be changed from 10.0.2.15 (nat ip) to ip address of the host-only interface. Osm has the option to deploy a cluster, and with the instantation of network functions and helm charts, modules are deployed on that cluster. It can be deployed in the same kubernetes where osm is hosted or, in order to facilitate the understading of the funcionality of the system, it can be deployed on another node as well.
@@ -70,5 +70,78 @@ osm k8scluster-add --creds k8s-cluster.yaml --version 1.21 --vim dummy_vim --des
 ```
 
 
-Once the installation is finished it is time to provide an example. This one is taken from an osm hackfest, where the purpose was creating an ldap
+Once the installation is finished it is time to provide an example. This one is based on one provided in an osm hackfest, whose the purpose was creating an ldap server scheme. First of all,  we must clone directory of github where descriptors are allocated:
+
+```
+git clone --recurse-submodules -j8 https://osm.etsi.org/gitlab/vnf-onboarding/osm-packages.git
+```
+
+Once these descriptors are downloaded, it is time to create the virtual network functions.
+
+```
+cd osm-packages
+```
+```
+osm package-validate --no-recursive openldap_knf
+osm package-validate --no-recursive openldap_ns
+```
+```
+osm package-build openldap_knf
+osm package-build openldap_ns
+```
+
+```
+osm nfpkg-create openldap_knf.tar.gz
+osm nspkg-create openldap_ns.tar.gz
+```
+
+
+A script of configuration, openldad-params.yaml, must be created with thte following parameters:
+
+```
+vld:
+- name: mgmtnet
+  vim-network-name: osm-ext
+additionalParamsForVnf:
+- member-vnf-index: openldap
+  additionalParamsForKdu:
+  - kdu_name: ldap
+    additionalParams:
+      # replicaCount: 2  
+      service:
+        type: LoadBalancer
+        loadBalancerIP: '192.168.56.51' # MetalLB IP Address
+      adminPassword: osm4u
+      configPassword: osm4u
+      env:
+        LDAP_ORGANISATION: "Example Inc."
+        LDAP_DOMAIN: "example.org"
+        LDAP_BACKEND: "hdb"
+        LDAP_TLS: "true"
+        LDAP_TLS_ENFORCE: "false"
+        LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
+
+```
+
+
+After creating this script, we must launch the network function (instantation)
+```
+osm ns-create --ns_name ldap \
+    --nsd_name openldap_ns \
+    --vim_account dummy_vim \
+    --config_file $HOME/openldap-params.yaml
+```
+
+After having the instace deployed, it must be tested. The first thing to do is installing openldap utils to be able to connect with openldap server
+
+```
+sudo apt-get update
+sudo apt install slapd ldap-utils
+```
+
+Once is installed, it can be tested:
+
+```
+ldapsearch -x -H ldap://192.168.56.51:389 -b dc=example,dc=org -D "cn=admin,dc=example,dc=org" -w osm4u
+```
 
