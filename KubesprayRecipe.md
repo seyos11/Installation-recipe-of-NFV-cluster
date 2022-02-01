@@ -129,3 +129,15 @@ La otra manera de realizar este paso de forma automática es cambiar el fichero 
 ```
 
 
+Es posible que haya que introducir más modificaciones en el caso de querer conectar OSM a este cluster de kubernetes. Esto se debe a que debe haber una dirección ip a la que OSM deba contactar. Por defecto, kubernetes está siendo ejecutado y escucha en la dirección localhost: 127.0.0.1:6443. Esto inhabilitaría la conexión con OSM. Es por eso que al lanzar kubespray hay que determinar en que dirección se escucha, modificando el valor de localhost que viene por defecto.
+
+---
+- name: Set kubeadm_discovery_address
+  set_fact:
+    kubeadm_discovery_address: >-
+      {%- if "138.4.7.139" in kube_apiserver_endpoint or "localhost" in kube_apiserver_endpoint -%}
+      
+La forma manual sería una vez hecho el despliegue crear un archivo yaml kubeconfig propio al que llamar. 
+```
+kubeadm init --config kubeconfig.yaml
+```
