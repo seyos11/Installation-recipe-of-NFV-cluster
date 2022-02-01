@@ -61,4 +61,40 @@ private_key_file = /home/$USER/.ssh/id_rsa
 En esta nueva variable se introduce la ruta a la clave privada generada con *ssh-keygen*
 
 
-A parte de los permisos de acceso, se produce otro problema a la hora de hacer instalaciones con ansible. Normalmente, en estas instalaciones se puede preguntar por la contraseña del usuario ya que la mayoría de métodos los hace mediante el prefijo *sudo*. Para que esto 
+A parte de los permisos de acceso, se produce otro problema a la hora de hacer instalaciones con ansible. Normalmente, en estas instalaciones se puede preguntar por la contraseña del usuario ya que la mayoría de métodos los hace mediante el prefijo *sudo*. Para que esto no suponga un problema hay que dar permiso a nuestro usuario para que no se le requiera la contraseña. Esto se consigue modificando el fichero /etc/sudoers añadiendo la siguiente sentencia: *giros ALL=(ALL) NOPASSWD:ALL*
+
+
+
+Otro de los cambios realizados es en el archivo ansible/inventory/group_vars/all.yaml. En el debemos activar el siguiente flag:
+
+*etcd_kubeadm_enabled: true* 
+
+Todo este proceso se realiza mediante el comando root ya que así se especifica cuando se procede al despliegue: 
+
+```
+sudo time ansible-playbook --become --become-user=root site.yml
+
+```
+Usamos la sentencia become para indicar que queremos realizar los procesos con el comando sudo y que el usuario desde el que se realizan todos los métodos de instalación es el root. Es posible que al indicar esto último no sea necesaria la sentencia *--become*. En un primer momento se intentó realizar la instalación con el usuario giros pero había sentencias en algunos de los archivos de configuración que acaban dando fallo por problemas  de permisos de acceso a directorios.
+
+
+
+Otro de los cambios realizados es el de modificar el fichero site.yml dónde se alojan algunas de los roles que han de ser instalados en cada uno de los nodos indicados. Entre estos cambios se llamaba al router, al cual se le instala BIRD para permitir la configuración de red con BGP y Calico.  En este caso no se dispone de un router accesible, con lo cual está instalación no es posible. Además, esta modificación ya habñia supuesto problemas con el escenario virtual de VNX.
+
+
+
+
+
+
+
+- name: Copy admin kubeconfig to current/ansible become user home
+  copy:
+    src: "{{ kube_config_dir }}/admin.conf"
+    dest: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+    remote_src: yes
+    mode: "0600"
+    backup: yes
+
+
+
+
