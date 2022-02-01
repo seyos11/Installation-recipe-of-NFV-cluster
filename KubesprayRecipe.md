@@ -141,3 +141,5 @@ La forma manual sería una vez hecho el despliegue crear un archivo yaml kubecon
 ```
 kubeadm init --config kubeconfig.yaml
 ```
+
+Otra forma de automatizarlo que parece más correctar es indagar en la configuración de kubeadm creada. Se usa un fichero por defecto que establece las variables de configuración de kubeadm y del nodo de control. Entre estas variables está de adverisement. Con lo cual puede que lo mejor sea cambiar el valor de tal dirección
