@@ -1,4 +1,4 @@
-# Receta para el despliegue de kubernetes en kubespray
+# Receta para el despliegue de Kubernetes con Kubespray
 
 En primer lugar nos bajamos un zip donde se encuentran todos los ficheros que permiten el despliegue de kubespray. En él se incluyen tanto los ficheros para realizar el despliegue con ansible a la 
 par que contiene un fichero xml en VNX que permite lanzar instancias virtuales en las que desplegar kubernetes. Tal caso no es el nuestro, ya que disponemos de 4 máquinas en las que realizar este despliegue.
