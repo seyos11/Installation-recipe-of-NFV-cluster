@@ -75,17 +75,39 @@ Todo este proceso se realiza mediante el comando root ya que así se especifica 
 sudo time ansible-playbook --become --become-user=root site.yml
 
 ```
-Usamos la sentencia become para indicar que queremos realizar los procesos con el comando sudo y que el usuario desde el que se realizan todos los métodos de instalación es el root. Es posible que al indicar esto último no sea necesaria la sentencia *--become*. En un primer momento se intentó realizar la instalación con el usuario giros pero había sentencias en algunos de los archivos de configuración que acaban dando fallo por problemas  de permisos de acceso a directorios.
+Usamos la sentencia become para indicar que queremos realizar los procesos con el comando sudo y que el usuario desde el que se realizan todos los métodos de instalación es el root. Es posible que al indicar esto último no sea necesaria la sentencia *--become*. En un primer momento se intentó realizar la instalación con el usuario giros pero había sentencias en algunos de los archivos de configuración que acaban dando fallo por problemas de permisos de acceso a directorios.
 
 
 
-Otro de los cambios realizados es el de modificar el fichero site.yml dónde se alojan algunas de los roles que han de ser instalados en cada uno de los nodos indicados. Entre estos cambios se llamaba al router, al cual se le instala BIRD para permitir la configuración de red con BGP y Calico.  En este caso no se dispone de un router accesible, con lo cual está instalación no es posible. Además, esta modificación ya habñia supuesto problemas con el escenario virtual de VNX.
+Otro de los cambios realizados es el de modificar el fichero site.yml dónde se alojan algunas de los roles que han de ser instalados en cada uno de los nodos indicados. Entre estos cambios se llamaba al router, al cual se le instala BIRD para permitir la configuración de red con BGP y Calico.  En este caso no se dispone de un router accesible, con lo cual está instalación no es posible. Además, esta modificación ya había supuesto problemas con el escenario virtual de VNX.
+
+El fichero quedaría de la siguiente manera:
+
+```
+---
+
+  - name: Include kubespray tasks
+    include: kubespray/cluster.yml
+    tags: kubespray
+
+  - hosts: kube-master[0]
+    roles:
+      - metallb
+    tags: metallb
+
+  - hosts: kube-master[0]
+    roles:
+      - nginx-ingress
+    tags: nginx-ingress
+```
 
 
+Finalmente, esta última modificación propuesta no ha sido realizada pero sería la manera de automatizar lo que en este proces ose ha hecho de forma manual. Una vez acaba el despliegue de ansible y kubernetes es instalado sigue el proceso de verificación de que todo está instalado y es funcional. El principal problema es que esta verificación y, por lo tanto, el uso de Kubernetes solo se permite desde el usuario *root*. Esto se debe a que en el resto de usuarios no hay acceso al fichero kubeconfig. Lo que se ha hecho en este caso es coger el fichero desde root y copiarlo en el usuario que interesa, a la par que se la da permisos a este usuario para poder acceder al cluster.
+
+La otra manera de realizar este paso de forma automática es cambiar el fichero kubespray/roles/kubernetes/client/tasks/main.yml, cambiando el usuario para que el destino del fichero admin.conf esté en el usuario giros
 
 
-
-
+```
 
 - name: Copy admin kubeconfig to current/ansible become user home
   copy:
@@ -94,7 +116,16 @@ Otro de los cambios realizados es el de modificar el fichero site.yml dónde se 
     remote_src: yes
     mode: "0600"
     backup: yes
+    
+    
+- name: Copy admin kubeconfig to current/ansible become user home
+  copy:
+    src: "{{ kube_config_dir }}/admin.conf"
+    dest: "{{ ansible_env.HOME | default('/giros') }}/.kube/config"
+    remote_src: yes
+    mode: "0600"
+    backup: yes
 
-
+```
 
 
