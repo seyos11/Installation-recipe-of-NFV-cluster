@@ -69,6 +69,9 @@ Otro de los cambios realizados es en el archivo ansible/inventory/group_vars/all
 
 *etcd_kubeadm_enabled: true* 
 
+Uno de los elementos a parametrizar a gusto es el del balanceador Metallb. En un principio este elemento está configurado para comunicarse mediante BGP, con lo cual se asume la necesidad de usar Calico como CNI y, además, establecer una configuración BGP para el router. En este caso no se tienen permisos de acceso para configurar dicho router. Al darse este caso, se obvia está configuración por defecto y se opta por una configuración normal, en la que se trata de asignar un rango de direcciones ips a este balanceador para que sea accesible desde el exterior. Cabría plantear si puede haber varios balanceadores. En un primer lugar se usa para acceder a los distintos servicios que se desplieguen bajo los cuales se encuentran los distintos pods que dan funcionalidad a nuestras aplicaciones. Por otro lado a la hora de conectar el Open Source Mano la idea es es conectarlo al cluster a través de la dirección ip de anunciamiento del api de Kubernetes. 
+
+
 Todo este proceso se realiza mediante el comando root ya que así se especifica cuando se procede al despliegue: 
 
 ```
