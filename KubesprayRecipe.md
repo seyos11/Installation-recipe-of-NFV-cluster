@@ -157,11 +157,13 @@ sudo cp kubeconfig_cluster.yaml .kube/config
 
 
 Es tiempo de crear un controlador con el comando bootstrap
+
 '''
 juju bootstrap kubespray
 '''
 
 Ahora, desde pagoda 1 hay que copiar el siguente contenido en un script sh y ejecutarlo para crear un volumen persistente
+
 '''
 #!/bin/bash
 function install_k8s_storageclass() {
