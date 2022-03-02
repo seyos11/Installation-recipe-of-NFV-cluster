@@ -146,3 +146,67 @@ kubeadm init --config kubeconfig.yaml
 ```
 
 Otra forma de automatizarlo que parece más correctar es indagar en la configuración de kubeadm creada. Se usa un fichero por defecto que establece las variables de configuración de kubeadm y del nodo de control. Entre estas variables está de adverisement. Con lo cual puede que lo mejor sea cambiar el valor de tal dirección
+
+
+Finalmente, hay que integrar este cluster junto al de OSM. Para añadir este cluster es necesario crear una nube de juju de tipo k8s y un controlador para este nuevo cluster. Para ello hay que cambiar el archivo config en el directorio .kube por el kubeconfig del cluster que queremos añadir y rellenar una variable de entorno que apunte a este fichero:
+
+'''
+export $KUBECONFIG = .kube/config
+sudo cp kubeconfig_cluster.yaml .kube/config
+'''
+
+
+Es tiempo de crear un controlador con el comando bootstrap
+'''
+juju bootstrap kubespray
+'''
+
+Ahora, desde pagoda 1 hay que copiar el siguente contenido en un script sh y ejecutarlo para crear un volumen persistente
+'''
+#!/bin/bash
+function install_k8s_storageclass() {
+    echo "Installing open-iscsi"
+    sudo apt-get update
+    sudo apt-get install open-iscsi
+    sudo systemctl enable --now iscsid
+    echo "Installing OpenEBS"
+    helm repo add openebs https://openebs.github.io/charts
+    helm repo update
+    helm install --create-namespace --namespace openebs openebs openebs/openebs --version 3.1.0
+    helm ls -n openebs
+    local storageclass_timeout=400
+    local counter=0
+    local storageclass_ready=""
+    echo "Waiting for storageclass"
+    while (( counter < storageclass_timeout ))
+    do
+        kubectl get storageclass openebs-hostpath &> /dev/null
+
+        if [ $? -eq 0 ] ; then
+            echo "Storageclass available"
+            storageclass_ready="y"
+            break
+        else
+            counter=$((counter + 15))
+            sleep 15
+        fi
+    done
+    [ -n "$storageclass_ready" ] || FATAL "Storageclass not ready after $storageclass_timeout seconds. Cannot install openebs"
+    kubectl patch storageclass openebs-hostpath -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+}
+install_k8s_storageclass()
+'''
+
+'''
+chmod +x install_k8s_storageclass.sh
+./install_k8s_storageclass
+'''
+
+
+Una vez generado dicho volumen volvemos a la máquina donde esta corriendo osm y juju para crear la nube de juju y posteriormetne llamar al comando de osm osm k8scluster-add para unir el cluster a osm
+
+'''
+juju add-k8s kubespray --controller kubespray 
+'''
+
+Finalmente, volvemos a cambiar el archivo de configuración kubeconfig del directorio .kube por el de OSM. Este cambio de fichero funciona como un switch de api de kubernetes. Dependiendo del kubeconfig nuestros comandos kubectl llamarán a la api de uno o de otro cluster. En este caso ahora nos interesa voler a comunicarnos con la api del nodo osm para poder llamar al comando osm k8scluster-add
