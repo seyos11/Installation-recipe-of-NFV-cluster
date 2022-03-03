@@ -211,4 +211,7 @@ Una vez generado dicho volumen volvemos a la máquina donde esta corriendo osm y
 juju add-k8s kubespray --controller kubespray 
 ```
 
-Finalmente, volvemos a cambiar el archivo de configuración kubeconfig del directorio .kube por el de OSM. Este cambio de fichero funciona como un switch de api de kubernetes. Dependiendo del kubeconfig nuestros comandos kubectl llamarán a la api de uno o de otro cluster. En este caso ahora nos interesa voler a comunicarnos con la api del nodo osm para poder llamar al comando osm k8scluster-add
+Finalmente, volvemos a cambiar el archivo de configuración kubeconfig del directorio .kube por el de OSM. Este cambio de fichero funciona como un switch de api de kubernetes. Dependiendo del kubeconfig nuestros comandos kubectl llamarán a la api de uno o de otro cluster. En este caso ahora nos interesa voler a comunicarnos con la api del nodo osm para poder llamar al comando osm k8scluster-add.
+
+
+Realmente, parece ser que instalando 
