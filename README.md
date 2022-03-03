@@ -95,6 +95,12 @@ osm nfpkg-create openldap_knf.tar.gz
 osm nspkg-create openldap_ns.tar.gz
 ```
 
+Add repo files to osm
+```
+osm repo-add --type helm-chart --description "Bitnami repo" bitnami https://charts.bitnami.com/bitnami
+osm repo-add --type helm-chart --description "Cetic repo" cetic https://cetic.github.io/helm-charts
+osm repo-add --type helm-chart --description "Elastic repo" elastic https://helm.elastic.co
+```
 
 A script of configuration, openldad-params.yaml, must be created with thte following parameters:
 
