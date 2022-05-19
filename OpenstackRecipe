@@ -1,0 +1,19 @@
+En el nodo controlador implementar el siguiente comando si ya se ha realizado el bootstrap-servers con error. Esto genera un perfil de libvirt que es eliminado de primeras y que es necesario tener creado para que la tarea de ansible no se interrumpa. En teoría está solucinado en la versión utilizada, ya que comprueba el perfil antes de eliminarlo, pero da error de que no existe:
+De momento las pruebas de Openstack se están realizando con un nodo, lo que implica que Kubespray debe funcionar con un solo worker también. Esto es así porque se generan conflictos de docker cuando se realizan las configuraciones de kolla. 
+
+
+
+```
+sudo apparmor_parser  /etc/apparmor.d/usr.sbin.libvirtd
+```
+
+Por otro lado en docker hay que crear un fichero de configuración para que no salte un error en el servicio.  El fichero es el siguiente:/etc/systemd/system/docker.service.d/docker.conf
+
+El contenido de dicho fichero debe ser el mostrado a continuación
+
+```
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd
+
+```
