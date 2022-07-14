@@ -24,3 +24,8 @@ osm vim-create --name vim_ficticio --user u --password p --tenant p --account_ty
 
 Otra alternativa es el uso de un VIM de Openstack. En este caso hay que determinar la dirección de la API del controlador de Openstack donde este último escucha las peticiones de conexión. Hay que añadir además usuario y contraseña.
 
+´´´
+
+´´´
+
+Otra opción, no comprobada, es la incorporación de un VIM en la nube a través de clásicas plataformas en la nube como Amazon Web Services o Google Cloud.
