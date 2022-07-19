@@ -213,5 +213,21 @@ juju add-k8s kubespray --controller kubespray
 
 Finalmente, volvemos a cambiar el archivo de configuración kubeconfig del directorio .kube por el de OSM. Este cambio de fichero funciona como un switch de api de kubernetes. Dependiendo del kubeconfig nuestros comandos kubectl llamarán a la api de uno o de otro cluster. En este caso ahora nos interesa voler a comunicarnos con la api del nodo osm para poder llamar al comando osm k8scluster-add.
 
+### Receta rápida
 
-Realmente, parece ser que instalando 
+Finalmente se ofrece una receta rápida con las instrucciones para el despliegue de Kubernetes:
+
+```
+cd tutorial_kubespray/ansible/kubespray
+sudo pip3 install -r requirements.txt
+cd tutorial_kubespray/ansible
+sudo time ansible-playbook --become --become-user=root site.yml
+```
+
+En el caso de resetear el clúster y sus configuraciones se debería hacer uso del siguiente comando que recurre al archivo reset.yaml donde están especificadas las desconfiguraciones por defecto a llevar a cabo.
+
+```
+sudo time ansible-playbook --become --become-user=root ./kubespray/reset.yaml
+```
+
+
