@@ -219,4 +219,4 @@ ExecStart=/usr/bin/dockerd
 ```
 
 
-Finalmente, la receta a seguir sería la instalación encontrada en el README.md de vnx-kolla de openstack.
+Los archivos de configuración pueden encontrarse en el siguiete enlace: https://github.com/seyos11/Openstack_cluster_kolla
