@@ -18,4 +18,11 @@ El último sistema que se ha de desplegar es Openstack. Este es el despliegue m�
 Es importante comprender como quedan las conexiones de esta plataforma a nivel físico. Para ello se muestran una serie de ilustraciones que definen dicha relación a nivel de red
 
 ![Alt text](./images/OpenstackControllerSwitch.png?raw=true "Openstack Controller switch")
+![Alt text](./images/OpenstackComputeSwitch.png?raw=true "Openstack Compute switch")
+![Alt text](./images/OsmSwitch.png?raw=true "Osm connection to switch")
+![Alt text](./images/clienteSwitch.png?raw=true "Connection from host to switch")
+![Alt text](./images/K8sMRouter.png?raw=true "Kubernetes Master connection to router")
+![Alt text](./images/K8sW1Switch.png?raw=true "Kubernetes Worker connection to switch")
+
+
 
