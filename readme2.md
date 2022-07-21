@@ -16,3 +16,6 @@ El segundo sistema a desplegar es Kubernetes. En este caso se emplea la herramie
 El último sistema que se ha de desplegar es Openstack. Este es el despliegue más conflictivo de todos debido a la cantidad de redes e interfaces físicas que han de conectarse al sistema. El despliegue consta de 2 nodos: uno controlador y de red, y otro de computación; lo ideal sería emplear al menos dos nodos de computación para poder realizar mejores pruebas de conectividad. Se sigue la receta del repositorio https://github.com/seyos11/Openstack_cluster_kolla
 
 Es importante comprender como quedan las conexiones de esta plataforma a nivel físico. Para ello se muestran una serie de ilustraciones que definen dicha relación a nivel de red
+
+![Alt text](./images/OpenstackControllerSwitch.png?raw=true "Openstack Controller switch")
+
