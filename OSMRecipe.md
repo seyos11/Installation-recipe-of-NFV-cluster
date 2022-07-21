@@ -2,11 +2,11 @@ Esta receta es la seguida para la instalación de OSM. En primer lugar, aclarar 
 
 La instalación como tal es bastante simple, solo hay que ejecutar una serie de comandos:
 
-´´´
+```
 wget https://osm-download.etsi.org/ftp/osm-11.0-eleven/install_osm.sh
 chmod +x install_osm.sh
 ./install_osm.sh 2>&1 | tee osm_install_log.txt
-´´´
+```
 En el caso de querer instalar osm con el monitor de K8s para favorecer a posteriori el uso de herramientas de visualización como GRafana es necesario pasar al comando de instalación el flag --k8s_monitor. En nuestro caso no se ha implementado dicha instalación ya que daba un conflicto con Kubernetes y los puertos.
 
 Una vez instalado, solo hay que seguir dos pasos: la incorporación de un VIM y, si fuera objetivo del usuario, de un cluster de Kubernetes.
