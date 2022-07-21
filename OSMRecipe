@@ -25,7 +25,21 @@ osm vim-create --name vim_ficticio --user u --password p --tenant p --account_ty
 Otra alternativa es el uso de un VIM de Openstack. En este caso hay que determinar la dirección de la API del controlador de Openstack donde este último escucha las peticiones de conexión. Hay que añadir además usuario y contraseña.
 
 ´´´
-
+    osm vim-create --name vim_openstack --user u --password p --tenant p --account_type dummy  --account_type openstack --admin_username <usuario admin Openstack> --admin_password <contraseñaOpenstack> --auth_url  https://<direccionIP_API_Openstack>/v3
 ´´´
 
 Otra opción, no comprobada, es la incorporación de un VIM en la nube a través de clásicas plataformas en la nube como Amazon Web Services o Google Cloud. 
+
+
+Finalmente, hay que añadir un VIM para el despliegue de CNFs. En este caso se usa un clúster de Kubernetes; este clúster hay que añadirlo a OSM mediante el siguiente comando:
+
+
+```
+osm k8scluster-add --creds clusters/kubeconfig-cluster.yaml --version '1.21' --vim <VIM_NAME|VIM_ID> --description "My K8s cluster" --k8s-nets '{"net1": "osm-ext"}' cluster
+```
+
+Una vez conectado K8s a OSM ya se dispone de dos VIM, uno para el despliegue de VNFs tradicionales y otro para el despliegue de CNFs.
+
+En el caso de querer disponer de una paralelización de usuarios se puede creer una serie de usuarios y unos proyectos asociados. Esto se puede hacer intuitivamente a través de la interfaz web de OSM. 
+
+
