@@ -17,16 +17,16 @@ La primera es el uso de un dummy ficticio. Esta opción cobra sentido se se va a
 
 Este dummy ficticio es muy fácil de crear; el siguiente ocmando puede servir de insipiración:
 
-´´´
+```
 osm vim-create --name vim_ficticio --user u --password p --tenant p --account_type dummy --auth_url http://localhost/dummy
 
-´´´
+```
 
 Otra alternativa es el uso de un VIM de Openstack. En este caso hay que determinar la dirección de la API del controlador de Openstack donde este último escucha las peticiones de conexión. Hay que añadir además usuario y contraseña.
 
-´´´
+```
     osm vim-create --name vim_openstack --user u --password p --tenant p --account_type dummy  --account_type openstack --admin_username <usuario admin Openstack> --admin_password <contraseñaOpenstack> --auth_url  https://<direccionIP_API_Openstack>/v3
-´´´
+```
 
 Otra opción, no comprobada, es la incorporación de un VIM en la nube a través de clásicas plataformas en la nube como Amazon Web Services o Google Cloud. 
 
