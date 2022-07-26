@@ -25,4 +25,36 @@ Es importante comprender como quedan las conexiones de esta plataforma a nivel f
 ![Alt text](./images/K8sW1Switch.png?raw=true "Kubernetes Worker connection to switch")
 
 
+Es fundanmental entender las conexiones entre los distintos nodos. Se han configurado varias redes por clúster para aumentar las opciones de estos. En el futuro, se puede realizar una fase de optimización en cuanto al uso de estas redes. Un ejemplo sería seleccionar la red de gestión para la conectividad entre los nodos de K8s en lugar de usar la red del departamento.
+
+En las siguientes figuras se muestran una serie de diagramas que explican las arquitecturas de red seguida para las plataformas de Openstack y Kubernetes integradas con OSM. Además, se dan unas tablas con las direcciones IP de cada interfaz de todos los equipos empleados.
+
+
+
+
+
+
+
+| Device     | Interface      | IP address  |
+| :---: |   :---:       | :---: |
+| `pagoda1`        | eth1         | `138.4.7.139`   |
+| `pagoda2`         | eth1         | `10.0.0.32`   |
+| `pagoda2`         | eth2         | `10.0.10.31`   |
+| `pagoda2`         | eth3         | `---`   |
+| `pagoda2`         | eth4         | `138.4.7.140`   |
+| `pagoda3`         | eth1         | `138.4.7.141`   |
+| `pagoda3`         | eth2         | `10.0.0.31`   |
+| `pagoda3`         | eth3         | `10.0.10.6`   |
+| `pagoda3`         | eth4         | `----`   |
+| `pagoda4`         | eth1         | `138.4.7.142`   |
+| `pagoda4`         | eth1         | `10.0.0.41`   |
+| `pagoda5`         | eth1         | `10.0.0.11`   |
+| `pagoda5`         | eth2         | `10.0.10.11`   |
+| `pagoda5`         | eth3         | `----`   |
+| `pagoda5`         | eth4         | `138.4.7.148`   |
+| `giros9`         | eth1         | `138.4.7.169`   |
+| `giros9`         | eth2         | `10.0.0.61`   |
+
+
+
 
