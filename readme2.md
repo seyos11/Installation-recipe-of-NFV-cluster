@@ -15,24 +15,30 @@ El segundo sistema a desplegar es Kubernetes. En este caso se emplea la herramie
 
 El último sistema que se ha de desplegar es Openstack. Este es el despliegue más conflictivo de todos debido a la cantidad de redes e interfaces físicas que han de conectarse al sistema. El despliegue consta de 2 nodos: uno controlador y de red, y otro de computación; lo ideal sería emplear al menos dos nodos de computación para poder realizar mejores pruebas de conectividad. Se sigue la receta del repositorio https://github.com/seyos11/Openstack_cluster_kolla
 
-Es importante comprender como quedan las conexiones de esta plataforma a nivel físico. Para ello se muestran una serie de ilustraciones que definen dicha relación a nivel de red. Estas ilustraciones muestran las conexiones de las interfaces de los distintos dispositivos tal switch físico instalado en el departamento.
+Es importante comprender como quedan las conexiones de esta plataforma a nivel físico. Para ello se muestran una serie de ilustraciones que definen dicha relación a nivel de red. Estas ilustraciones muestran las conexiones de las interfaces de los distintos dispositivos al switch físico y al router instalados en el departamento.
 
-Conexiones del nodo controlador de Openstack
+Conexiones del nodo controlador de Openstack.
+
 ![Alt text](./images/OpenstackControllerSwitch.png?raw=true "Openstack Controller switch")
 
-Conexiones del nodo de computación de Openstack
+Conexiones del nodo de computación de Openstack.
+
 ![Alt text](./images/OpenstackComputeSwitch.png?raw=true "Openstack Compute switch")
 
-Conexiones del nodo que sustenta el orquestador de OSM
+Conexiones del nodo que sustenta el orquestador de OSM.
+
 ![Alt text](./images/OsmSwitch.png?raw=true "Osm connection to switch")
 
-Conexiones del nodo maestro de Kubernetes al router
+Conexiones del nodo maestro de Kubernetes al router.
+
 ![Alt text](./images/K8sMRouter.png?raw=true "Kubernetes Master connection to router")
 
-Conexiones del nodo worker de Kubernetes al switch
+Conexiones del nodo worker de Kubernetes al switch.
+
 ![Alt text](./images/K8sW1Switch.png?raw=true "Kubernetes Worker connection to switch")
 
-Conexiones del nodo cliente 
+Conexiones del nodo cliente.
+
 ![Alt text](./images/clienteSwitch.png?raw=true "Connection from host to switch")
 
 Es fundanmental entender las conexiones entre los distintos nodos. Se han configurado varias redes por clúster para aumentar las opciones de estos. En el futuro, se puede realizar una fase de optimización en cuanto al uso de estas redes. Un ejemplo sería seleccionar la red de gestión para la conectividad entre los nodos de K8s en lugar de usar la red del departamento.
