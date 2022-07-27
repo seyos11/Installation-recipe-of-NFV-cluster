@@ -47,7 +47,7 @@ entries:
 generated: "2022-03-10T12:08:28.991280255+01:00"
 ```
 
-Una vez se dispone de esto lo único que hay que hacer hacer los commits necesarios para actulizar esta información en el repositorio de github. Con todo esto realizado lo único que queda es probar a incorporar el repositorio o repositorios requeridos a OSM y realizar los despliegeus deseados. Para añadir estas repositorios se emplea la siguiente orden:
+Una vez se dispone de esto lo único que hay que hacer hacer los commits necesarios para actulizar esta información en el repositorio de github. Con todo esto realizado lo único que queda es probar a incorporar el repositorio o repositorios requeridos a OSM y realizar los despliegues deseados. Para añadir estos repositorios se emplea la siguiente orden:
 
 ```
     osm repo-add --type helm-chart --description "Own Helm chart repo" escenarioRedResidencial https://seyos11.github.io/HelmChartQoSforOSM/
