@@ -53,7 +53,7 @@ A continuación se muestran las tablas que emparejan las distintas interfaces de
 
 | Device     | Interface      | IP address  |
 | :---: |   :---:       | :---: |
-| `pagoda1`        | eth1         | `138.4.7.139`   |
+| `pagoda1`        | eno1         | `138.4.7.139`   |
 | `pagoda2`         | eth1         | `10.0.0.32`   |
 | `pagoda2`         | eth2         | `10.0.10.31`   |
 | `pagoda2`         | eth3         | `---`   |
@@ -62,13 +62,13 @@ A continuación se muestran las tablas que emparejan las distintas interfaces de
 | `pagoda3`         | eth2         | `10.0.0.31`   |
 | `pagoda3`         | eth3         | `10.0.10.6`   |
 | `pagoda3`         | eth4         | `----`   |
-| `pagoda4`         | eth1         | `138.4.7.142`   |
-| `pagoda4`         | eth1         | `10.0.0.41`   |
+| `pagoda4`         | eno1         | `138.4.7.142`   |
+| `pagoda4`         | eth2         | `10.0.0.41`   |
 | `pagoda5`         | eth1         | `10.0.0.11`   |
 | `pagoda5`         | eth2         | `10.0.10.11`   |
 | `pagoda5`         | eth3         | `----`   |
 | `pagoda5`         | eth4         | `138.4.7.148`   |
-| `giros9`         | eth1         | `138.4.7.169`   |
+| `giros9`         | enp2s0         | `138.4.7.169`   |
 | `giros9`         | eth2         | `10.0.0.61`   |
 
 
