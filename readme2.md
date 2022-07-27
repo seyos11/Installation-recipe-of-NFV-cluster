@@ -15,7 +15,7 @@ El segundo sistema a desplegar es Kubernetes. En este caso se emplea la herramie
 
 El último sistema que se ha de desplegar es Openstack. Este es el despliegue más conflictivo de todos debido a la cantidad de redes e interfaces físicas que han de conectarse al sistema. El despliegue consta de 2 nodos: uno controlador y de red, y otro de computación; lo ideal sería emplear al menos dos nodos de computación para poder realizar mejores pruebas de conectividad. Se sigue la receta del repositorio https://github.com/seyos11/Openstack_cluster_kolla
 
-Es importante comprender como quedan las conexiones de esta plataforma a nivel físico. Para ello se muestran una serie de ilustraciones que definen dicha relación a nivel de red. Estas ilustraciones muestran las conexiones de las interfaces de los distintos dispositivos al switch físico y al router instalados en el departamento.
+Es importante comprender como quedan las conexiones de esta plataforma a nivel físico. Para ello se muestran una serie de ilustraciones que definen dicha relación a nivel de red. Estas ilustraciones muestran las conexiones de las interfaces de los distintos dispositivos al switch físico y al router instalados en el departamento. También se muestra la nomenclatura de las interfaces empleadas.
 
 Conexiones del nodo controlador de Openstack.
 
@@ -41,15 +41,15 @@ Conexiones del nodo cliente.
 
 ![Alt text](./images/clienteSwitch.png?raw=true "Connection from host to switch")
 
-Es fundanmental entender las conexiones entre los distintos nodos. Se han configurado varias redes por clúster para aumentar las opciones de estos. En el futuro, se puede realizar una fase de optimización en cuanto al uso de estas redes. Un ejemplo sería seleccionar la red de gestión para la conectividad entre los nodos de K8s en lugar de usar la red del departamento.
+Es fundamental entender las conexiones entre los distintos nodos. Se han configurado varias redes por clúster para aumentar las opciones de estos. En el futuro, se puede realizar una fase de optimización en cuanto al uso de estas redes. Un ejemplo sería seleccionar la red de gestión para la conectividad entre los nodos de K8s en lugar de usar la red del departamento. 
 
-En las siguientes figuras se muestran una serie de diagramas que explican las arquitecturas de red seguida para las plataformas de Openstack y Kubernetes integradas con OSM. Además, se dan unas tablas con las direcciones IP de cada interfaz de todos los equipos empleados.
-
-
+En las siguientes figuras se muestran una serie de diagramas que explican las arquitecturas de red seguida para las plataformas de Openstack y Kubernetes integradas con OSM. Además, se dan unas tablas con las direcciones IP de cada interfaz de todos los equipos empleados. 
 
 
 
 
+
+A continuación se muestran las tablas que emparejan las distintas interfaces de los equipos con las direcciones IP seleccionadas.
 
 | Device     | Interface      | IP address  |
 | :---: |   :---:       | :---: |
