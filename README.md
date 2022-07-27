@@ -13,7 +13,9 @@ El primer sistema a desplegar es OSM, ya que es el principal en un proyecto de o
 
 El segundo sistema a desplegar es Kubernetes. En este caso se emplea la herramienta Kubespray para la automatización del despliegue y configuración del clúster de Kubernetes. El despliegue consta de 2 nodos: un master y un worker; lo ideal sería emplear al menos dos workers para poder realizar mejores pruebas de conectividad. Se sigue la receta del repositorio https://github.com/seyos11/Kubespray_bare_metal
 
-El último sistema que se ha de desplegar es Openstack. Este es el despliegue más conflictivo de todos debido a la cantidad de redes e interfaces físicas que han de conectarse al sistema. El despliegue consta de 2 nodos: uno controlador y de red, y otro de computación; lo ideal sería emplear al menos dos nodos de computación para poder realizar mejores pruebas de conectividad. Se sigue la receta del repositorio https://github.com/seyos11/Openstack_cluster_kolla
+El último sistema que se ha de desplegar es Openstack. Este es el despliegue más conflictivo de todos debido a la cantidad de redes e interfaces físicas que han de conectarse al sistema. El despliegue consta de 2 nodos: uno controlador y de red, y otro de computación; lo ideal sería emplear al menos dos nodos de computación para poder realizar mejores pruebas de conectividad. Se sigue la receta del repositorio https://github.com/seyos11/Openstack_cluster_kolla.
+
+Se proporcionan también las recetas en este repositorio en las urls: https://github.com/seyos/Installation-recipe-of-OSM-and-microk8s-cluster/KubesprayRecipe.md y https://github.com/seyos/Installation-recipe-of-OSM-and-microk8s-cluster/OpenstackRecipe.md 
 
 
 Es importante comprender como quedan las conexiones de esta plataforma a nivel físico. Para ello se muestran una serie de ilustraciones que definen dicha relación a nivel de red. Estas ilustraciones muestran las conexiones de las interfaces de los distintos dispositivos al switch físico y al router instalados en el departamento. También se muestra la nomenclatura de las interfaces empleadas.
