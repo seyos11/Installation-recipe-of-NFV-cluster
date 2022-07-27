@@ -162,17 +162,20 @@ To unconfigure the NAT, just execute (change eth0 by the name of your external i
 ```bash
 sudo vnx_config_nat -d ExtNet eth0
 ```
+Destroy Openstack deployment
 
-
+```bash
+kolla-ansible -i inventory/multinode --configdir kolla-config destroy
+```
 
 ### Conflictos
 
 
-Es importante realizar un apaño en el despliegue de Openstack para evitar conflictos de red. El conflicto se produce al incorporar como red de proveedor la red que es utilizada habitualmente para la conectividad con internet. En muchos proyectos va resultar esencial disponer de una red externa que habitlite la comunicación con el exterior a las máquinas virtuales desplegadas. En este caso, siempre se usa la red del departamento (138.4.7.128/25) para dicha comunicación. 
+Es importante realizar una modificación en el despliegue de Openstack para evitar conflictos de red. El conflicto se produce al incorporar como red de proveedor la red que es utilizada habitualmente para la conectividad con internet. En muchos proyectos va resultar esencial disponer de una red externa que habilite la comunicación con el exterior a las máquinas virtuales desplegadas. En este caso, siempre se usa la red del departamento (138.4.7.128/25) para dicha comunicación. 
 
-El problema surge cuando en el archivo globals se marca con una variable la serie de puertos/interfaces que se desea que establezcan las redes de proveedor. Entre estas interfaces se encuentra eth4 que es la que tiene el cable ethernet al roouter de la red del departamento. En un momento del despliegue del clúster de Openstack está interfaz se inhabilita. Esto produce que en una serie de instrucciones a tomar psoteriomente a esta inhabilitación no se tenga acceso a internet, desencadenando una serie de fallos en el despliegue que lo interrumpen.
+El problema surge cuando en el archivo 'globals.yaml' se marca con una variable la serie de puertos/interfaces que se desea que establezcan las redes de proveedor. Entre estas interfaces se encuentra eth4, que es la que tiene el cable ethernet al router de la red del departamento. En un momento del despliegue del clúster de Openstack está interfaz se inhabilita. Esto produce que, en una serie de instrucciones a tomar posteriomente a esta inhabilitación, no se tenga acceso a internet, desencadenando una serie de fallos en el despliegue que lo interrumpen.
 
-Al no disponer de otra conexión a Internet se toma la siguiente manipulación en la conexión de las máquinas de Openstack. En todos los nodos de Openstack se ha de configurar la ruta IP por defecto para que el camino a internet se haga a través de la interfaz de gestión. Es decir, se toma en este caso la interfaz eth1, que es la que conecta los dispositivos con la red de gestión empleada para el despleigue de ansible a través de ssh. Esta red ha de comunicarnos con otro dispositivo en al misma red (como el nodo OSM o el nodo cliente) que esté conectado a su vez a la red del departamento. Además, se ha de comrpobar que dichos nodos tienen la opción de routing activada ('net.ipv4.ip_forward=1') y activar un NAT (usando el fichero creado por David de vnx_config_nat) para poder establecer dicha transformación y dar conectividad a los nodos a través de la red de gestión.
+Al no disponer de otra conexión a Internet se toma la siguiente manipulación en la conexión de las máquinas de Openstack. En todos los nodos de Openstack se ha de configurar la ruta IP por defecto para que el camino a internet se haga a través de la interfaz de gestión. Es decir, se toma en este caso la interfaz eth1, que es la que conecta los dispositivos con la red de gestión empleada para el despleigue de ansible a través de ssh. Esta red ha de comunicarnos con otro dispositivo en al misma red (como el nodo OSM o el nodo cliente) que esté conectado a su vez a la red del departamento. Además, se ha de comprobar que dichos nodos tienen la opción de routing activada ('net.ipv4.ip_forward=1') y activar un NAT (usando el fichero creado por David de vnx_config_nat) para poder establecer dicha transformación y dar conectividad a los nodos a través de la red de gestión.
 
 Una vez hecha esta manipulación, los nodos disponen de conectividad a internet durante el despliegue permitiendose la finalización de dicho proceso. Una vez desplegado, las instancias virtuales van a poder ser conectadas a la red de proveedor del departamento  y tener acceso externo.
 
