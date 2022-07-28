@@ -4,9 +4,9 @@ En esta repositorio se pretender ofreer una serie de recetas para el despliegue 
 
 Entre los sistemas desplegados se encuentran:
 <ol>
-  <li> OSM: Orquestador NFV para el despliegue de VNFs y CNFs.</li>
-  <li> Kubernetes: VIM para el despliegue de CNFs. </li>
-  <li> Openstack: VIM para el despliegue de VNFs tradicionales.</li>
+  <li> **OSM**: Orquestador NFV para el despliegue de VNFs y CNFs.</li>
+  <li> **Kubernetes**: VIM para el despliegue de CNFs. </li>
+  <li> **Openstack**: VIM para el despliegue de VNFs tradicionales.</li>
 </ol>
 
 El primer sistema a desplegar es OSM, ya que es el principal en un proyecto de orquestación NFV y además su despliegue es el más simple. Lo único que hay que hacer es instalar OSM en un nodo disponible mediante el uso de un par de comandos que podemos encontrar en la receta del siguiente repositorio: 
