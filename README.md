@@ -25,6 +25,8 @@ El siguiente listado muestra las recetas encontradas en este repositorio para la
 
 Se da otra receta de como configurar un repositorio de Helm Charts en: https://github.com/seyos11/Installation-recipe-of-OSM-and-microk8s-cluster/blob/main/HelmChartUploadRecipe.md. 
 
+
+La gestión de usuarios y proyectos es importante a la hora de permitir el trabajo entre múltiples usuarios. 
 Es importante comprender como quedan las conexiones de esta plataforma a nivel físico. Para ello se muestran una serie de ilustraciones que definen dicha relación a nivel de red. Estas ilustraciones muestran las conexiones de las interfaces de los distintos dispositivos al switch físico y al router instalados en el departamento. También se muestra la nomenclatura de las interfaces empleadas.
 
 Conexiones del nodo controlador de Openstack.
