@@ -178,6 +178,11 @@ El problema surge cuando en el archivo 'globals.yaml' se marca con una variable 
 
 Al no disponer de otra conexión a Internet se toma la siguiente manipulación en la conexión de las máquinas de Openstack. En todos los nodos de Openstack se ha de configurar la ruta IP por defecto para que el camino a internet se haga a través de la interfaz de gestión. Es decir, se toma en este caso la interfaz eth1, que es la que conecta los dispositivos con la red de gestión empleada para el despleigue de ansible a través de ssh. Esta red ha de comunicarnos con otro dispositivo en al misma red (como el nodo OSM o el nodo cliente) que esté conectado a su vez a la red del departamento. Además, se ha de comprobar que dichos nodos tienen la opción de routing activada ('net.ipv4.ip_forward=1') y activar un NAT (usando el fichero creado por David de vnx_config_nat) para poder establecer dicha transformación y dar conectividad a los nodos a través de la red de gestión.
 
+El diagrama mostrado en la siguiente ilustración refleja la modificación realizada:
+
+![Alt text](./rutaInternet.png?raw=true "Modificación de ruta a internet")
+
+
 Una vez hecha esta manipulación, los nodos disponen de conectividad a internet durante el despliegue permitiendose la finalización de dicho proceso. Una vez desplegado, las instancias virtuales van a poder ser conectadas a la red de proveedor del departamento  y tener acceso externo.
 
 Uno de los escenarios clásicos es la generación de una red externa en Openstack que disponga de un pool de direcciónes IP dentro del rango del departamento y, mediante el uso de un router y direcciones IP flotantes, se conecte a una red de autoservicio donde se desplieguen las instancias. Esto permite una capa de jerarquía y seguridad mayor, donde para acceder a las instancias se hace uso de direcciones IP flotantes mapeadas las direcciones IP de la red de autoservicio adjuntas a cada instancia virtual.
