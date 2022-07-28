@@ -267,5 +267,61 @@ enable_neutron_provider_networks: "yes"
 
 También se selecciona una dirección ip flotante para pdoer acceder a los servicios balanceando según el puerto de acceso: **10.0.0.250**. 
 
+El otro fichero importante es 'ml2_conf.ini'. Este fichero pertenece a la configuración propia de Openstack (no de Kolla) y se ha de tocar manualmente ya que a priori, Kolla no ofrece un fichero que abstraiga dicha configuración. Este fichero es tocado para poder determinar las interfaces físicas aptas para la generación de redes de proveedor con etiquetado VLAN. De serie, este listado viene vació, lo cual inhabilita crear redes provider con etiquetado VLAN. El script de configuración quedaría de la siguiente manera:
+
+```
+# ml2_conf.ini
+[ml2]
+# Changing type_drivers after bootstrap can lead to database inconsistencies
+type_drivers = {{ neutron_type_drivers }}
+tenant_network_types = {{ neutron_tenant_network_types }}
+{% if tunnel_address_family == 'ipv6' %}
+overlay_ip_version = 6
+{% endif %}
+{% if neutron_mechanism_drivers %}
+mechanism_drivers = {{ neutron_mechanism_drivers | map(attribute='name') | join(',') }}
+{% endif %}
+{% if neutron_extension_drivers %}
+extension_drivers = {{ neutron_extension_drivers | map(attribute='name') | join(',') }}
+{% endif %}
+
+[ml2_type_vlan]
+{% if enable_ironic | bool %}
+network_vlan_ranges = physnet1
+{% else %}
+network_vlan_ranges =
+{% endif %}
+
+[ml2_type_flat]
+{% if enable_ironic | bool %}
+flat_networks = *
+{% else %}
+flat_networks = {% for interface in neutron_external_interface.split(',') %}physnet{{ loop.index0 + 1 }}{% if not loop.last %},{% endif %}{% endfor %}
+{% endif %}
+
+[ml2_type_vxlan]
+vni_ranges = 1:1000
+
+{% if neutron_plugin_agent == 'ovn' %}
+[ml2_type_geneve]
+vni_ranges = 1001:2000
+max_header_size = 38
+
+[ovn]
+ovn_nb_connection = {{ ovn_nb_connection }}
+ovn_sb_connection = {{ ovn_sb_connection }}
+ovn_metadata_enabled = True
+enable_distributed_floating_ip = {{ neutron_ovn_distributed_fip | bool }}
+{% endif %}
+```
+
+
+La clave es añadir la siguiente línea en el fichero para habilitar la 'physnet1' para el uso de VLAN: 
+```
+    network_vlan_ranges = physnet1
+```
+
+'physnet1' hace referencia a la interfaz eth3 configurada en el archivo 'globals.yaml'. La interfaz eth4 es la que estaría asociada a la 'physnet2'. Es decir, cada interfaz para redes externas agregada en la configuración crea, de cara a Openstack, una red física. Realmente es así ya que todas las conexiones con los nodos a parte de las redes de gestión y tunelamiento son redes físicas externas.
+
 
 Los archivos de configuración pueden encontrarse en el siguiete enlace: https://github.com/seyos11/Openstack_cluster_kolla
