@@ -168,9 +168,9 @@ Destroy Openstack deployment
 kolla-ansible -i inventory/multinode --configdir kolla-config destroy
 ```
 
-### Conflictos
+## Conflictos
 
-# Conflictos de red
+### Conflictos de red
 
 Es importante realizar una modificación en el despliegue de Openstack para evitar conflictos de red. El conflicto se produce al incorporar como red de proveedor la red que es utilizada habitualmente para la conectividad con internet. En muchos proyectos va resultar esencial disponer de una red externa que habilite la comunicación con el exterior a las máquinas virtuales desplegadas. En este caso, siempre se usa la red del departamento (138.4.7.128/25) para dicha comunicación. 
 
@@ -199,7 +199,7 @@ Las redes de proveedor pueden disponer de un servicio de etiquetado VLAN. En est
 
 
 
-# Otros Conflictos 
+### Otros Conflictos 
 
 
 
@@ -224,7 +224,7 @@ ExecStart=/usr/bin/dockerd
 
 ```
 
-# Conflictos de configuración
+### Conflictos de configuración
 
 En cuanto a la configuración hay dos ficheros que cobran especial importancia. El primero es el archivo 'globals.yaml', el cual contiene el grueso de la configuración que Kolla ha de realizar a la hora de inicializar el clúster de Openstack. En este fichero lo más importante es la selección de las interfaces que sirven en el clúster como punto de conexión a redes físicas externas, lo cual permite, acorde a la nomenclatura de Openstack, crear redes de proveedor que hacen uso de estas redes. Además, se marca la interfaz para la comunicación por túnel entre los distintos nodos que son empleadas para las redes de autoservicio. Las líneas de dicha configuración son mostradas a continuación:
 
