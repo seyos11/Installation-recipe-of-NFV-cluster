@@ -53,3 +53,5 @@ Una vez se dispone de esto lo único que hay que hacer hacer los commits necesar
     osm repo-add --type helm-chart --description "Own Helm chart repo" escenarioRedResidencial https://seyos11.github.io/HelmChartQoSforOSM/
 
 ```
+
+En la siguente url podemos encontrar un repositorio de Helm Chart creado para un escenario de simulación de NFV. En este chart encontramos dos despliegues que crear dos pods, cada uno con la intención de suplir una serie de funciones de red distintas propias de un equipo local de cliente (CPE), equivalente a un router residencial.
