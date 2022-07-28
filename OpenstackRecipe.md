@@ -183,7 +183,7 @@ Uno de los escenarios clásicos es la generación de una red externa en Openstac
 
 En el caso de la red del departamento es importante tener en cuenta que direcciones IP son escogidas para el pool. Al haber pocos rangos, se toma uno de tamaño mínimo (138.4.7.216-138.4.7.218) para poder realizar las pruebas necesarias.
 
-Una cosa que sorprende es el retardo introducido al realizar conexión con la instancia a través de la IP flotante. Es algo que habría que investigar con un nivel de detalle mayor. El traceroute tampoco funciona como cabría de esperar, ya que a pesar de que el ttl mostrado en el ping es de 63 (se baja uno debido al router).
+Una cosa que sorprende es el retardo introducido al realizar conexión con la instancia a través de la IP flotante. Es algo que habría que investigar con un nivel de detalle mayor. El traceroute tampoco funciona como cabría de esperar, ya que a pesar de que el ttl mostrado en el ping es de 63 (se baja uno debido al router) el comando muestra una serie de saltos mucho mayor que 1.
 
 
 En la imagen mostrada a continuación se representa la topología de red de Openstack, en las cuales se observa el escenario comentado, además de una red extra vlan.
