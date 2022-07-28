@@ -180,7 +180,7 @@ Al no disponer de otra conexión a Internet se toma la siguiente manipulación e
 
 El diagrama mostrado en la siguiente ilustración refleja la modificación realizada:
 
-![Alt text](./rutaInternet.png?raw=true "Modificación de ruta a internet")
+![Alt text](./images/rutaInternet.png?raw=true "Modificación de ruta a internet")
 
 
 Una vez hecha esta manipulación, los nodos disponen de conectividad a internet durante el despliegue permitiendose la finalización de dicho proceso. Una vez desplegado, las instancias virtuales van a poder ser conectadas a la red de proveedor del departamento  y tener acceso externo.
