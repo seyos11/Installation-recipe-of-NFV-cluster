@@ -1,5 +1,5 @@
 ### Receta para el despliegue y configuración de una plataforma NFV conformada por OSM, Kubernetes y Openstack
-En esta repositorio se pretender ofreer una serie de recetas para el despliegue de los distintos módulos que componen la plataforma NFV montada por Víctor García durante el curso 2021-2022.
+En esta repositorio se pretender ofreer una serie de recetas para el despliegue de los distintos módulos que componen la plataforma NFV montada por Víctor García durante el curso 2021-2022 para el GIROS del DIT de la UPM.
 
 
 Entre los sistemas desplegados se encuentran:
