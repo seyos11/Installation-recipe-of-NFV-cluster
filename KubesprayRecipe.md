@@ -149,6 +149,7 @@ kubeadm init --config kubeconfig.yaml
 
 Otra forma de automatizarlo que parece más correctar es indagar en la configuración de kubeadm creada. Se usa un fichero por defecto que establece las variables de configuración de kubeadm y del nodo de control. Entre estas variables está de adverisement. Con lo cual puede que lo mejor sea cambiar el valor de tal dirección
 
+### Configuración OpenEBS: Esencial para OSM
 
 Finalmente, hay que integrar este cluster junto al de OSM. Para añadir este cluster es necesario crear una nube de juju de tipo k8s y un controlador para este nuevo cluster. Para ello hay que cambiar el archivo config en el directorio .kube por el kubeconfig del cluster que queremos añadir y rellenar una variable de entorno que apunte a este fichero:
 
@@ -199,9 +200,9 @@ install_k8s_storageclass()
 chmod +x install_k8s_storageclass.sh
 ./install_k8s_storageclass
 ```
+Esta instalación de servicio de volumen se realiza una vez se ha desplegado el clúster de Kubernetes, de forma manual.
 
-
-Una vez generado dicho volumen volvemos a la máquina donde esta corriendo osm y juju para crear la nube de juju y posteriormente llamar al comando de osm osm k8scluster-add para unir el cluster a osm.
+Una vez generado dicho volumen volvemos a la máquina donde esta corriendo osmy lo conectamos con el comando de osm osm k8scluster-add para unir el cluster a osm.
 
 
 Finalmente, volvemos a cambiar el archivo de configuración kubeconfig del directorio .kube por el de OSM. Este cambio de fichero funciona como un switch de api de kubernetes. Dependiendo del kubeconfig nuestros comandos kubectl llamarán a la api de uno o de otro cluster. En este caso ahora nos interesa volver a comunicarnos con la api del nodo osm para poder llamar al comando osm k8scluster-add.
