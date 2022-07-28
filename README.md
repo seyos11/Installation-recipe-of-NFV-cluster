@@ -18,9 +18,9 @@ El último sistema que se ha de desplegar es Openstack. Este es el despliegue m�
 El siguiente listado muestra las recetas encontradas en este repositorio para la instalación de los distintos sistemas que conforman las plataforma NFV.
 
 <ol>
-  <li> Receta para la configuración y despliegue del clúster de Kubernetes con Kubespray: https://github.com/seyos11/Installation-recipe-of-OSM-and-microk8s-cluster/blob/main/KubesprayRecipe.md </li>
-  <li> Receta para la configuración y despliegue del clúster de Openstack con Kolla-Ansible: https://github.com/seyos11/Installation-recipe-of-OSM-and-microk8s-cluster/blob/main/OpenstackRecipe.md </li>
-  <li> Receta para la instalación de OSM: https://github.com/seyos11/Installation-recipe-of-OSM-and-microk8s-cluster/blob/main/OSMRecipe.md</li>
+  <li> Receta para la configuración y despliegue del clúster de Kubernetes con Kubespray: https://github.com/seyos11/Installation-recipe-of-NFV-cluster/blob/main/KubesprayRecipe.md </li>
+  <li> Receta para la configuración y despliegue del clúster de Openstack con Kolla-Ansible: https://github.com/seyos11/Installation-recipe-of-NFV-cluster/blob/main/OpenstackRecipe.md </li>
+  <li> Receta para la instalación de OSM: https://github.com/seyos11/Installation-recipe-of-NFV-cluster/blob/main/OSMRecipe.md</li>
 </ol>
 
 Se da otra receta de como configurar un repositorio de Helm Charts en: https://github.com/seyos11/Installation-recipe-of-OSM-and-microk8s-cluster/blob/main/HelmChartUploadRecipe.md
