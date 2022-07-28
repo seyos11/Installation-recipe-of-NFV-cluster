@@ -170,6 +170,7 @@ kolla-ansible -i inventory/multinode --configdir kolla-config destroy
 
 ### Conflictos
 
+# Conflictos de red
 
 Es importante realizar una modificación en el despliegue de Openstack para evitar conflictos de red. El conflicto se produce al incorporar como red de proveedor la red que es utilizada habitualmente para la conectividad con internet. En muchos proyectos va resultar esencial disponer de una red externa que habilite la comunicación con el exterior a las máquinas virtuales desplegadas. En este caso, siempre se usa la red del departamento (138.4.7.128/25) para dicha comunicación. 
 
@@ -188,15 +189,17 @@ Una cosa que sorprende es el retardo introducido al realizar conexión con la in
 
 En la imagen mostrada a continuación se representa la topología de red de Openstack, en las cuales se observa el escenario comentado, además de una red extra vlan.
 
-Las redes de proveedor pueden disponer de un servicio de etiquetado VLAN. En este caso, el acceso es directo. Para ello es indispensable que las máquinas que intenten comunicarse con estas instancias virtuales estén en el mismo rango de direcciones IP, hagan uso de la misma etiqueta seleccionada para la red y esten conectados directa o indirectamnte a la misma red física. En nuestro caso se toma la interfaz eth3 para el acceso a la red de proveedor VLAN; los dispostiivos que quieran conectarse con esta red deberán tener conexión física con esta interfaz. En nuestro caso, se utiliza un switch físico que agrega todas las redes del clúster del departamento además del nodo cliente encargado de la generación de escenarios simulados. Al final, de forma indirecta, todas las instancias virtuales generadas en estos escenarios tendrán conectividad a nivel 2 con la red vlan de proveedor.
-
-
 ![Alt text](./topologiaRed.png?raw=true "Topología")
 
 
+Las redes de proveedor pueden disponer de un servicio de etiquetado VLAN. En este caso, el acceso es directo. Para ello es indispensable que las máquinas que intenten comunicarse con estas instancias virtuales estén en el mismo rango de direcciones IP, hagan uso de la misma etiqueta seleccionada para la red y esten conectados directa o indirectamnte a la misma red física. En nuestro caso se toma la interfaz eth3 para el acceso a la red de proveedor VLAN; los dispostiivos que quieran conectarse con esta red deberán tener conexión física con esta interfaz. En nuestro caso, se utiliza un switch físico que agrega todas las redes del clúster del departamento además del nodo cliente encargado de la generación de escenarios simulados. Al final, de forma indirecta, todas las instancias virtuales generadas en estos escenarios tendrán conectividad a nivel 2 con la red vlan de proveedor.
 
 
 
+
+
+
+# Otros Conflictos 
 
 
 
@@ -220,6 +223,8 @@ ExecStart=
 ExecStart=/usr/bin/dockerd
 
 ```
+
+# Conflictos de configuración
 
 En cuanto a la configuración hay dos ficheros que cobran especial importancia. El primero es el archivo 'globals.yaml', el cual contiene el grueso de la configuración que Kolla ha de realizar a la hora de inicializar el clúster de Openstack. En este fichero lo más importante es la selección de las interfaces que sirven en el clúster como punto de conexión a redes físicas externas, lo cual permite, acorde a la nomenclatura de Openstack, crear redes de proveedor que hacen uso de estas redes. Además, se marca la interfaz para la comunicación por túnel entre los distintos nodos que son empleadas para las redes de autoservicio. Las líneas de dicha configuración son mostradas a continuación:
 
