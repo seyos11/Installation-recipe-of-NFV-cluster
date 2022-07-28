@@ -221,5 +221,51 @@ ExecStart=/usr/bin/dockerd
 
 ```
 
+En cuanto a la configuración hay dos ficheros que cobran especial importancia. El primero es el archivo 'globals.yaml', el cual contiene el grueso de la configuración que Kolla ha de realizar a la hora de inicializar el clúster de Openstack. En este fichero lo más importante es la selección de las interfaces que sirven en el clúster como punto de conexión a redes físicas externas, lo cual permite, acorde a la nomenclatura de Openstack, crear redes de proveedor que hacen uso de estas redes. Además, se marca la interfaz para la comunicación por túnel entre los distintos nodos que son empleadas para las redes de autoservicio. Las líneas de dicha configuración son mostradas a continuación:
+
+```
+# Opciones: ['centos', 'debian', 'rhel', 'ubuntu']
+kolla_base_distro: "ubuntu"
+
+# Opciones: [ binary, source ]
+kolla_install_type: "source"
+
+
+openstack_release: "wallaby"
+
+# This should be a VIP, an unused IP on your network that will float between
+# the hosts running keepalived for high-availability. If you want to run an
+# All-In-One without haproxy and keepalived, you can set enable_haproxy to no
+# in "OpenStack options" section, and set this value to the IP of your
+# 'network_interface' as set in the Networking section below.
+
+#Selección de VIP. Esta dirección es flotante y redirige a todos los servicios de
+#Openstack. Se usa para conectarla con OSM.
+kolla_internal_vip_address: "10.0.0.250"
+
+#Selección de la interfaz de red del clúster: se elige la red de gestión
+network_interface: "eth1"
+
+#Selección de la interfaz de tunelamiento. 
+tunnel_interface: "eth2"
+#Selección de las interfaces para las redes externas o provider.
+neutron_external_interface: "eth3,eth4"
+#Nombre de los bridges virtuales creados y asociadas a las interfaces para las 
+#redes externas o provider
+neutron_bridge_name: "br-vlan,br-ex"
+#Selección del agente de switching para neutroon. 
+neutron_plugin_agent: "openvswitch"
+
+enable_ceilometer: "yes"
+enable_gnocchi: "yes"
+
+#Habilitación de las redes de proveedor
+enable_neutron_provider_networks: "yes"
+
+
+```
+
+También se selecciona una dirección ip flotante para pdoer acceder a los servicios balanceando según el puerto de acceso: **10.0.0.250**. 
+
 
 Los archivos de configuración pueden encontrarse en el siguiete enlace: https://github.com/seyos11/Openstack_cluster_kolla
