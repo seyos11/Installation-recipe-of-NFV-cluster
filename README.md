@@ -54,15 +54,15 @@ Es fundamental entender las conexiones entre los distintos nodos. Se han configu
 En las siguientes figuras se muestran una serie de diagramas que explican las arquitecturas de red seguida para las plataformas de Openstack y Kubernetes integradas con OSM. Además, se dan unas tablas con las direcciones IP de cada interfaz de todos los equipos empleados. 
 
 
-Arquitectura de red para el clúster de Openstack junto a OSM
+Arquitectura de red para el clúster de Openstack junto a OSM.
 
 ![Alt text](./images/Openstack.png?raw=true "Connection from host to switch")
 
-Arquitectura de red para el clúster de Kubernetes junto a OSM
+Arquitectura de red para el clúster de Kubernetes junto a OSM.
 
 ![Alt text](./images/Kubespray.png?raw=true "Connection from host to switch")
 
-
+En cuanto a la configuración del switch, se ha dejado vacío este apartado. Principalmente se ha empleado para el etiquetado VLAN necesario para el escenario concreto desplegado en la simulación de la plataforma. En caso de querer realizar un escenario similar sería necesario aplicar una serie de cambios en esta configuración.
 
 A continuación se muestran las tablas que emparejan las distintas interfaces de los equipos con las direcciones IP seleccionadas.
 
