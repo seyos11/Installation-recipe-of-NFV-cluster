@@ -54,4 +54,8 @@ Una vez se dispone de esto lo único que hay que hacer hacer los commits necesar
 
 ```
 
-En la siguente url podemos encontrar un repositorio de Helm Chart creado para un escenario de simulación de NFV. En este chart encontramos dos despliegues que crear dos pods, cada uno con la intención de suplir una serie de funciones de red distintas propias de un equipo local de cliente (CPE), equivalente a un router residencial.
+En la siguente url podemos encontrar un repositorio de Helm Chart creado para un escenario de simulación de NFV: https://github.com/seyos11/HelmChartQoSforOSM. En este chart encontramos dos despliegues que crear dos pods, cada uno con la intención de suplir una serie de funciones de red distintas propias de un equipo local de cliente (CPE), equivalente a un router residencial.
+
+
+Un buen post que detalla también y en el que nos hemos inspirado para la generación de repositorios de Helm Charts es el siguiente:
+https://medium.com/@mattiaperi/create-a-public-helm-chart-repository-with-github-pages-49b180dbb417
